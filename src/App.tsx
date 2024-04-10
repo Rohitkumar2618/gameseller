@@ -3,6 +3,7 @@ import NavBar from "./Components/NavBar"
 
 
 
+
 function App() {
 
   return <Grid templateAreas={{
@@ -11,7 +12,7 @@ function App() {
 
   }}>
 
-    <GridItem area='nav'  >
+    <GridItem area='nav'   >
       <NavBar />
     </GridItem>
 
