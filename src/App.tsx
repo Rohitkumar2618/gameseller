@@ -12,6 +12,7 @@ export interface GameQuery {
   genre: Genre | null;
   platform: Platform | null;
   sortOrder: string;
+  searchText: string;
 }
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     genre: null,
     platform: null,
     sortOrder: "", // Added initial value for sortOrder
+    searchText: "", // Added searchText with initial value
   });
 
   return (
@@ -32,10 +34,12 @@ function App() {
         lg: "200px 1fr", // big screen
       }}
     >
+      {/* NavBar */}
       <GridItem area="nav">
-        <NavBar />
+        <NavBar onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })} />
       </GridItem>
 
+      {/* GenreList - Shown only above large screens */}
       <Show above="lg">
         <GridItem area="aside" paddingX={5}>
           <GenreList
@@ -44,22 +48,26 @@ function App() {
           />
         </GridItem>
       </Show>
+
+      {/* Main Content */}
       <GridItem area="main">
         <Flex paddingLeft={2} marginBottom={3}>
-          <Box marginRight={5} >
-
+          <Box marginRight={5}>
+            {/* Platform Selector */}
             <PlatformSelector
               selectedPlatform={gameQuery.platform}
               onSelectPlatform={(platform) => setGameQuery({ ...gameQuery, platform })}
             />
-
           </Box>
 
+          {/* Sort Selector */}
           <SortSelector
             sortOrder={gameQuery.sortOrder}
             onSelectSortOrder={(sortOrder) => setGameQuery({ ...gameQuery, sortOrder })}
           />
         </Flex>
+
+        {/* Game Grid */}
         <GameGrid gameQuery={gameQuery} />
       </GridItem>
     </Grid>
